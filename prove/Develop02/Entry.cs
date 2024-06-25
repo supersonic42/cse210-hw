@@ -1,7 +1,7 @@
 public class Entry
 {
-    public string _date;
-    public string _promptText;
+    public DateTime _date;
+    public int _promptId;
     public string _entryText;
 
     public void Display()

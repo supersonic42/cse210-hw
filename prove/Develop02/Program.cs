@@ -41,6 +41,8 @@ class Program
         int choice = 0;
         List<int> choices = [.. menu.Keys];
 
+        Journal journal = new();
+
         do
         {
             Console.WriteLine(menuStr);
@@ -55,23 +57,38 @@ class Program
             switch(choice)
             {
                 case 1:
-                    string randomPrompt = promptGenerator.GetRandomPrompt();
+                    KeyValuePair<int, string> randomPrompt = promptGenerator.GetRandomPrompt();
 
-                    if (randomPrompt != null)
+                    if (randomPrompt.Equals(default(KeyValuePair<int, string>)))
                     {
-                        Console.WriteLine($"{randomPrompt}");
+                        Console.WriteLine("No prompts...");
                     }
                     else
                     {
-                        Console.WriteLine("No prompts...");
+                        Console.WriteLine($"\n{randomPrompt.Value}");
+                        Console.Write("Your answer: ");
+                        string entryText = Console.ReadLine();
+
+                        Entry entry = new()
+                        {
+                            _promptId = randomPrompt.Key,
+                            _entryText = entryText,
+                            _date = DateTime.Now,
+                        };
+
+                        journal.AddEntry(entry);
                     }
 
                     break;
                 case 2:
+                    journal.DisplayAll(prompts);
                     break;
                 case 3:
                     break;
                 case 4:
+                    Console.Write("Type filename: ");
+                    string filename = Console.ReadLine();
+                    journal.SaveToFile(filename);
                     break;
             }
         }
