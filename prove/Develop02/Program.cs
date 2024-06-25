@@ -22,19 +22,20 @@ class Program
             menuStr += menuItem.Key + ". " + menuItem.Value + "\n";
         }
 
-        List<string> prompts = [
-            "What did you do to serve God today?",
-            "Did you commit any sin today?",
-            "How many hours did you sleep last night?",
-            "What did you eat today?",
-            "What movie did you see today?",
-        ];
-        
+        Dictionary<int, string> prompts = new()
+        {
+            {1, "What did you do to serve God today?"},
+            {2, "Did you commit any sin today?"},
+            {3, "How many hours did you sleep last night?"},
+            {4, "What did you eat today?"},
+            {5, "What movie did you see today?"},
+        };
+
         PromptGenerator promptGenerator = new();
 
-        foreach(string prompt in prompts)
+        foreach(KeyValuePair<int, string> prompt in prompts)
         {
-            promptGenerator._prompts.Add(prompt);
+            promptGenerator._prompts.Add(prompt.Key, prompt.Value);
         }
 
         int choice = 0;
@@ -44,9 +45,8 @@ class Program
         {
             Console.WriteLine(menuStr);
             Console.Write("Select action: ");
-            choice = Convert.ToInt32(Console.ReadLine());
 
-            if (choices.Contains(choice) == false)
+            if (int.TryParse(Console.ReadLine(), out choice) == false || choices.Contains(choice) == false)
             {
                 Console.WriteLine("Wrong choice.");
                 continue;
@@ -57,7 +57,15 @@ class Program
                 case 1:
                     string randomPrompt = promptGenerator.GetRandomPrompt();
 
-                    Console.WriteLine($"{randomPrompt}");
+                    if (randomPrompt != null)
+                    {
+                        Console.WriteLine($"{randomPrompt}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("No prompts...");
+                    }
+
                     break;
                 case 2:
                     break;
