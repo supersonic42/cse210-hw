@@ -4,8 +4,11 @@ public class Entry
     public int _promptId;
     public string _entryText;
 
-    public void Display()
+    public void Display(Dictionary<int, string> prompts)
     {
-        
+        Console.WriteLine();
+        Console.WriteLine($"Date: {_date.ToString("yyyy-MM-dd")}");
+        Console.WriteLine($"Prompt: {prompts[_promptId]}");
+        Console.WriteLine($"Answer: {_entryText}");
     }
 }

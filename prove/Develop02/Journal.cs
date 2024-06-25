@@ -22,10 +22,7 @@ public class Journal
     {
         foreach(KeyValuePair<string, Entry> entry in _entries)
         {
-            Console.WriteLine();
-            Console.WriteLine($"Date: {entry.Value._date.ToString("yyyy-MM-dd")}");
-            Console.WriteLine($"Prompt: {prompts[entry.Value._promptId]}");
-            Console.WriteLine($"Answer: {entry.Value._entryText}");
+            entry.Value.Display(prompts);
         }
     }
 
