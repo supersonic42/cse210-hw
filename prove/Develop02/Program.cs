@@ -32,16 +32,13 @@ class Program
         };
 
         PromptGenerator promptGenerator = new();
-
-        foreach(KeyValuePair<int, string> prompt in prompts)
-        {
-            promptGenerator._prompts.Add(prompt.Key, prompt.Value);
-        }
+        promptGenerator.FillPrompts(prompts);
 
         int choice = 0;
         List<int> choices = [.. menu.Keys];
 
         Journal journal = new();
+        string filename = null;
 
         do
         {
@@ -84,11 +81,48 @@ class Program
                     journal.DisplayAll(prompts);
                     break;
                 case 3:
+                    Console.Write("Type filename: ");
+                    filename = Console.ReadLine();
+
+                    if (filename != "")
+                    {
+                        try
+                        {
+                            promptGenerator.FillPrompts(prompts);
+                            journal.LoadFromFile(filename, ref promptGenerator);
+                            Console.WriteLine("Journal has been loaded.");
+                        }
+                        catch (FileNotFoundException)
+                        {
+                            Console.WriteLine($"File '{filename}' is not found.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Filename cannot be empty.");
+                    }
                     break;
                 case 4:
                     Console.Write("Type filename: ");
-                    string filename = Console.ReadLine();
-                    journal.SaveToFile(filename);
+                    filename = Console.ReadLine();
+
+                    if (filename != "")
+                    {
+                        try
+                        {
+                            journal.LoadFromFile(filename, ref promptGenerator, false);
+                            journal.SaveToFile(filename);
+                            Console.WriteLine($"Journal has been saved.");
+                        }
+                        catch (FileNotFoundException)
+                        {
+                            Console.WriteLine($"File '{filename}' is not found.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Filename cannot be empty.");
+                    }
                     break;
             }
         }

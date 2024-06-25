@@ -24,4 +24,24 @@ public class PromptGenerator
         
         return prompt;
     }
+
+    public void FillPrompts(Dictionary<int, string> prompts)
+    {
+        _prompts = [];
+
+        foreach(KeyValuePair<int, string> prompt in prompts)
+        {
+            _prompts.Add(prompt.Key, prompt.Value);
+        }
+    }
+
+    public void FillUsedPromptIds(List<int> promptIds)
+    {
+        _usedPromptIds = [];
+
+        foreach(int promptId in promptIds)
+        {
+            _usedPromptIds.Add(promptId);
+        }
+    }
 }
