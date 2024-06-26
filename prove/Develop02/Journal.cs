@@ -20,10 +20,17 @@ public class Journal
 
     public void DisplayAll(Dictionary<int, string> prompts)
     {
-        foreach(KeyValuePair<string, Entry> entry in _entries)
+        if (_entries.Count == 0)
         {
-            entry.Value.Display(prompts);
+            Console.WriteLine("There are no entries in the journal.");
         }
+        else
+        {
+            foreach(KeyValuePair<string, Entry> entry in _entries)
+            {
+                entry.Value.Display(prompts);
+            }
+        } 
     }
 
     public void SaveToFile(string filename)
