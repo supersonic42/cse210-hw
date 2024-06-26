@@ -1,3 +1,12 @@
+/*
+Project: Journal
+Author: Anton Sanakoev
+
+Exceeding requirements:
+1. Prompt generated is always unique
+2. Saving each prompt for each date
+3. No overwriting entries for previous dates
+*/
 using System;
 
 class Program
