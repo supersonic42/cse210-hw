@@ -4,11 +4,6 @@ public class Activity(string name, string description, int duration)
     protected string _description = description;
     protected int _duration = duration;
 
-    public void Run()
-    {
-        
-    }
-
     public void DisplayStartingMessage()
     {
 

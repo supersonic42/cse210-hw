@@ -4,6 +4,11 @@ public class ListingActivity(string name, string description, int duration, int 
     private int _count = count;
     private List<string> _prompts = prompts;
 
+    public void Run()
+    {
+        
+    }
+
     public void GetRandomPrompt()
     {
 

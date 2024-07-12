@@ -9,6 +9,11 @@ public class ReflectingActivity(
     private List<string> _prompts = prompts;
     private List<string> _questions = questions;
 
+    public void Run()
+    {
+        
+    }
+    
     public string GetRandomPrompt()
     {
         return "";
@@ -26,6 +31,6 @@ public class ReflectingActivity(
 
     public void DisplayQuestions()
     {
-        
+
     }
 }
