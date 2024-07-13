@@ -26,6 +26,8 @@ public class Activity(string name, string description, int duration)
 
     public void ShowSpinner(int seconds)
     {
+        Console.CursorVisible = false;
+
         int sleep = 500;
         int steps = seconds * 1000 / sleep;
 
@@ -33,19 +35,25 @@ public class Activity(string name, string description, int duration)
         {
             int index = i < _spinnerChars.Count() ? i : i % _spinnerChars.Count();
 
-            Console.Write(_spinnerChars[index]);
+            Console.Write(_spinnerChars[index]);           
             Thread.Sleep(sleep);
             Console.Write("\b \b");
         }
+
+        Console.CursorVisible = true;
     }
 
     public void ShowCountDown(int seconds)
     {
+        Console.CursorVisible = false;
+
         for (var i = seconds; i > 0; i--)
         {
             Console.Write(i);
             Thread.Sleep(1000);
             Console.Write("\b \b");
         }
+
+        Console.CursorVisible = true;
     }
 }
