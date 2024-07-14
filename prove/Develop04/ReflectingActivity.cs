@@ -53,7 +53,7 @@ public class ReflectingActivity(
 
     public void DisplayPrompt(string prompt)
     {
-        Console.WriteLine($"-[{prompt}]-\n");
+        Console.WriteLine($"- {prompt} -\n");
     }
 
     public void DisplayQuestions()

@@ -3,7 +3,7 @@ Project: Mindfulness Program
 Author: Anton Sanakoev
 
 Exceeding requirements:
-1. 
+1. In the Reflecting Activity I did duplication protection in GetRandomQuestion function, so questions are always unique.
 */
 
 using System;
@@ -87,6 +87,27 @@ class Program
                     ReflectingActivity activity = new("Reflecting Activity", description, 0, prompts, questions);
                     activity.DisplayStartingMessage();
 
+                    int duration = int.Parse(Console.ReadLine());
+                    activity.SetDuration(duration);
+                    activity.Run();
+                }
+                break;
+
+                case 3:
+                {
+                    string description = "This activity will help you reflect on the good things in your life by having you list as many things as you can in a certain area.";
+
+                    List<string> prompts = [
+                        "Who are people that you appreciate?",
+                        "What are personal strengths of yours?",
+                        "Who are people that you have helped this week?",
+                        "When have you felt the Holy Ghost this month?",
+                        "Who are some of your personal heroes?",
+                    ];
+
+                    ListingActivity activity = new("Listing Activity", description, 0, 0, prompts);
+                    activity.DisplayStartingMessage();
+                   
                     int duration = int.Parse(Console.ReadLine());
                     activity.SetDuration(duration);
                     activity.Run();

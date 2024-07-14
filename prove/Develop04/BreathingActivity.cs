@@ -20,5 +20,7 @@ public class BreathingActivity(string name, string description, int duration)
             Console.Write("\nBreathe out...");
             ShowCountDown(breatheOutDuration);
         }
+
+        DisplayEndingMessage();
     }
 }
