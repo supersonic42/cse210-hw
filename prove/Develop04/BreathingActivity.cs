@@ -20,13 +20,5 @@ public class BreathingActivity(string name, string description, int duration)
             Console.Write("\nBreathe out...");
             ShowCountDown(breatheOutDuration);
         }
-
-        Console.WriteLine("\n\nWell done!");
-
-        ShowSpinner(2);
-
-        Console.WriteLine($"\nYou have completed another {_duration} seconds of {_name}.");
-
-        ShowSpinner(2);
     }
 }
