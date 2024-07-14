@@ -62,8 +62,8 @@ public class ReflectingActivity(
 
         while (DateTime.Now < endTime)
         {
-            Console.Write($"\n> {GetRandomQuestion()}");
-            ShowSpinner(4);
+            Console.Write($"\n> {GetRandomQuestion()} ");
+            ShowSpinner(10);
         }
     }
 }
