@@ -2,6 +2,14 @@ public class EternalGoal(string name, string description, int points) : Goal(nam
 {
     private int _completionTimesCurrent = 0;
 
+    public static EternalGoal CreateInstance(string[] data)
+    {
+        EternalGoal obj = new(data[0], data[1], Int32.Parse(data[2]));
+        obj.SetCompletionTimesCurrent(Int32.Parse(data[3]));
+
+        return obj;
+    }
+
     public void SetCompletionTimesCurrent(int count)
     {
         _completionTimesCurrent = count;

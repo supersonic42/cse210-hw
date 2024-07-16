@@ -65,11 +65,15 @@ public class GoalManager()
 
                     case 4:
                     {
+                        Console.Write("What is the filename? ");
+                        string filename = Console.ReadLine();
+                        LoadGoals(filename);
                     }
                     break;
 
                     case 5:
                     {
+                        RecordEvent();
                     }
                     break;
                 }
@@ -147,7 +151,7 @@ public class GoalManager()
                 Console.Write("What is the accomplishing bonus? ");
                 int completionBonus = int.Parse(Console.ReadLine());
 
-                ChecklistGoal goal = new(goalName, goalDescription, goalPoints, completionTimesMax, completionBonus);
+                ChecklistGoal goal = new(goalName, goalDescription, goalPoints, completionBonus, completionTimesMax);
                 _goals.Add(goal);
             }
             break;
@@ -178,9 +182,43 @@ public class GoalManager()
         Console.WriteLine("File has been saved.");
     }
 
-    public void LoadGoals()
+    public void LoadGoals(string filename)
     {
+        string[] lines = System.IO.File.ReadAllLines(filename);
 
+        foreach (string line in lines)
+        {
+            string[] parts = line.Split(":");
+
+            string goalClassName = parts[0];
+            string[] goalData = parts[1].Split(",");
+
+            switch(goalClassName)
+            {
+                case "SimpleGoal":
+                {
+                    SimpleGoal goal = SimpleGoal.CreateInstance(goalData);
+                    _goals.Add(goal);
+                }
+                break;
+
+                case "EternalGoal":
+                {
+                    EternalGoal goal = EternalGoal.CreateInstance(goalData);
+                    _goals.Add(goal);
+                }
+                break;
+
+                case "ChecklistGoal":
+                {
+                    ChecklistGoal goal = ChecklistGoal.CreateInstance(goalData);
+                    _goals.Add(goal);
+                }
+                break;
+            }
+        }
+
+        Console.WriteLine("File has been loaded.");
     }
 
     public void RecordEvent()
