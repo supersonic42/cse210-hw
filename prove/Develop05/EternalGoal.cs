@@ -1,10 +1,5 @@
 public class EternalGoal(string name, string description, int points) : Goal(name, description, points)
 {
-    public override string GetDetailsString()
-    {
-        throw new NotImplementedException();
-    }
-
     public override string GetStringRepresentation()
     {
         throw new NotImplementedException();

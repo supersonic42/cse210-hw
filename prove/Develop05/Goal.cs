@@ -8,7 +8,20 @@ public abstract class Goal(string name, string description, int points)
 
     public abstract bool IsComplete();
 
-    public abstract string GetDetailsString();
-
     public abstract string GetStringRepresentation();
+
+    public virtual string GetDetailsString()
+    {
+        return "";
+    }
+
+    public string GetName()
+    {
+        return _name;
+    }
+
+    public string GetDescription()
+    {
+        return _description;
+    }
 }
