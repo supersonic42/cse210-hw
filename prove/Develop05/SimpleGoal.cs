@@ -4,7 +4,9 @@ public class SimpleGoal(string name, string description, int points) : Goal(name
 
     public override string GetStringRepresentation()
     {
-        throw new NotImplementedException();
+        List<string> data = [_name, _description, _points.ToString(), IsComplete().ToString()];
+
+        return typeof(SimpleGoal).Name + ":" + String.Join(",", data);
     }
 
     public override bool IsComplete()

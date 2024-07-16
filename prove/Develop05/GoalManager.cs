@@ -27,46 +27,56 @@ public class GoalManager()
         int choice = 0;
         List<int> choices = [.. menu.Keys];
 
-        DisplayPlayerInfo();
-
         do 
         {
-            Console.Write("\n" + menuStr);
-
-            if (int.TryParse(Console.ReadLine(), out choice) == false || choices.Contains(choice) == false)
+            try
             {
-                Console.WriteLine("\nWrong choice.");
-                continue;
+                DisplayPlayerInfo();
+
+                Console.Write("\n" + menuStr);
+
+                if (int.TryParse(Console.ReadLine(), out choice) == false || choices.Contains(choice) == false)
+                {
+                    Console.WriteLine("\nWrong choice.");
+                    continue;
+                }
+
+                switch(choice)
+                {
+                    case 1:
+                    {
+                        CreateGoal();
+                    }
+                    break;
+
+                    case 2:
+                    {
+                        ListGoals();
+                    }
+                    break;
+
+                    case 3:
+                    {
+                        Console.Write("What is the filename? ");
+                        string filename = Console.ReadLine();
+                        SaveGoals(filename);
+                    }
+                    break;
+
+                    case 4:
+                    {
+                    }
+                    break;
+
+                    case 5:
+                    {
+                    }
+                    break;
+                }
             }
-
-            switch(choice)
+            catch (System.Exception e)
             {
-                case 1:
-                {
-                    CreateGoal();
-                }
-                break;
-
-                case 2:
-                {
-                    ListGoals();
-                }
-                break;
-
-                case 3:
-                {
-                }
-                break;
-
-                case 4:
-                {
-                }
-                break;
-
-                case 5:
-                {
-                }
-                break;
+                Console.WriteLine(e.Message);
             }
         }
         while(choice != 6);
@@ -74,18 +84,8 @@ public class GoalManager()
 
     public void DisplayPlayerInfo()
     {
-        Console.WriteLine($"You have {_score} points.");
+        Console.WriteLine($"\nYou have {_score} points.");
     }
-
-    // public void ListGoalnames()
-    // {
-
-    // }
-
-    // public void ListGoalDetails()
-    // {
-
-    // }
 
     public void CreateGoal()
     {
@@ -114,28 +114,41 @@ public class GoalManager()
             return;
         }
 
+        Console.Write("What is the name of your goal? ");
+        string goalName = Console.ReadLine();
+
+        Console.Write("What is the short description of your goal? ");
+        string goalDescription = Console.ReadLine();
+
+        Console.Write("What is the amount of points associated with this goal? ");
+        int goalPoints = int.Parse(Console.ReadLine());
+
         switch(goalId)
         {
             case 1:
             {
-                Console.Write("What is the name of your goal? ");
-                string goalName = Console.ReadLine();
-
-                Console.Write("What is the short description of your goal? ");
-                string goalDescription = Console.ReadLine();
-
-                Console.Write("What is the amount of points associated with this goal? ");
-                int goalPoints = int.Parse(Console.ReadLine());
-
                 SimpleGoal goal = new(goalName, goalDescription, goalPoints);
-
                 _goals.Add(goal);
             }
             break;
 
             case 2:
             {
-                
+                EternalGoal goal = new(goalName, goalDescription, goalPoints);
+                _goals.Add(goal);
+            }
+            break;
+
+            case 3:
+            {
+                Console.Write("How many times does this goal need to be accomplished for a bonus? ");
+                int completionTimesMax = int.Parse(Console.ReadLine());
+
+                Console.Write("What is the accomplishing bonus? ");
+                int completionBonus = int.Parse(Console.ReadLine());
+
+                ChecklistGoal goal = new(goalName, goalDescription, goalPoints, completionTimesMax, completionBonus);
+                _goals.Add(goal);
             }
             break;
         }
@@ -148,15 +161,21 @@ public class GoalManager()
         for (int i = 0; i < _goals.Count; i++)
         {
             Goal goal = _goals[i];
-            string goalCompleteMark = goal.IsComplete() ? "x" : "";
-            
-            Console.WriteLine($"{i + 1}. [{goalCompleteMark}] {goal.GetName()} ({goal.GetDescription()})");
+            Console.WriteLine(goal.GetDetailsString(i + 1));
         }
     }
 
-    public void SaveGoals()
+    public void SaveGoals(string filename)
     {
+        using StreamWriter outputFile = new(filename);
 
+        for (int i = 0; i < _goals.Count; i++)
+        {
+            Goal goal = _goals[i];
+            outputFile.WriteLine(goal.GetStringRepresentation());
+        }
+        
+        Console.WriteLine("File has been saved.");
     }
 
     public void LoadGoals()

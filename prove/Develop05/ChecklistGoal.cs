@@ -1,23 +1,40 @@
-public class ChecklistGoal(string name, string description, int points, int target, int bonus) :
+public class ChecklistGoal(string name, string description, int points, int completionTimesMax, int completionBonus) :
 Goal(name, description, points)
 {
-    private int _target = target;
-    private int _bonus = bonus;
-    private int _amountCompleted;
+    private int _completionTimesMax = completionTimesMax;
+    private int _completionTimesCurrent = 0;
+    private int _completionBonus = completionBonus;
 
-    public override string GetDetailsString()
+    public void SetCompletionTimesCurrent(int count)
     {
-        throw new NotImplementedException();
+        _completionTimesCurrent = count;
+    }
+
+    public override string GetDetailsString(int number)
+    {
+        string goalCompleteMark = IsComplete() ? "x" : " ";
+            
+        return $"{number}. [{goalCompleteMark}] {GetName()} ({GetDescription()})"
+            + $" | Completed: {_completionTimesCurrent}/{_completionTimesMax}";
     }
 
     public override string GetStringRepresentation()
     {
-        throw new NotImplementedException();
+        List<string> data = [
+            _name, 
+            _description, 
+            _points.ToString(), 
+            _completionBonus.ToString(), 
+            _completionTimesCurrent.ToString(), 
+            _completionTimesMax.ToString()
+        ];
+
+        return typeof(ChecklistGoal).Name + ":" + String.Join(",", data);
     }
 
     public override bool IsComplete()
     {
-        throw new NotImplementedException();
+        return _completionTimesCurrent == _completionTimesMax;
     }
 
     public override void RecordEvent()

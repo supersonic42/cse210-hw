@@ -2,7 +2,7 @@ public abstract class Goal(string name, string description, int points)
 {
     protected string _name = name;
     protected string _description = description;
-    protected int points = points;
+    protected int _points = points;
 
     public abstract void RecordEvent();
 
@@ -10,9 +10,11 @@ public abstract class Goal(string name, string description, int points)
 
     public abstract string GetStringRepresentation();
 
-    public virtual string GetDetailsString()
+    public virtual string GetDetailsString(int number)
     {
-        return "";
+        string goalCompleteMark = IsComplete() ? "x" : " ";
+            
+        return $"{number}. [{goalCompleteMark}] {GetName()} ({GetDescription()})";
     }
 
     public string GetName()
