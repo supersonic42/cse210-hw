@@ -2,8 +2,17 @@ public class ChecklistGoal(string name, string description, int points, int comp
 Goal(name, description, points)
 {
     private int _completionTimesMax = completionTimesMax;
-    private int _completionTimesCurrent = 0;
     private int _completionBonus = completionBonus;
+
+    public int GetCompletionTimesMax()
+    {
+        return _completionTimesMax;
+    }
+
+    public int GetCompletionBonus()
+    {
+        return _completionBonus;
+    }
 
     public static ChecklistGoal CreateInstance(string[] data)
     {
@@ -13,28 +22,23 @@ Goal(name, description, points)
         return obj;
     }
 
-    public void SetCompletionTimesCurrent(int count)
-    {
-        _completionTimesCurrent = count;
-    }
-
     public override string GetDetailsString(int number)
     {
         string goalCompleteMark = IsComplete() ? "x" : " ";
             
         return $"{number}. [{goalCompleteMark}] {GetName()} ({GetDescription()})"
-            + $" | Completed: {_completionTimesCurrent}/{_completionTimesMax}";
+            + $" | Completed: {GetCompletionTimesCurrent()}/{GetCompletionTimesMax()}";
     }
 
     public override string GetStringRepresentation()
     {
         List<string> data = [
-            _name, 
-            _description, 
-            _points.ToString(), 
-            _completionBonus.ToString(), 
-            _completionTimesCurrent.ToString(), 
-            _completionTimesMax.ToString()
+            GetName(), 
+            GetDescription(), 
+            GetPoints().ToString(), 
+            GetCompletionBonus().ToString(), 
+            GetCompletionTimesCurrent().ToString(), 
+            GetCompletionTimesMax().ToString()
         ];
 
         return typeof(ChecklistGoal).Name + ":" + String.Join(",", data);
@@ -42,11 +46,35 @@ Goal(name, description, points)
 
     public override bool IsComplete()
     {
-        return _completionTimesCurrent == _completionTimesMax;
+        return GetCompletionTimesCurrent() == GetCompletionTimesMax();
     }
 
     public override void RecordEvent()
     {
-        throw new NotImplementedException();
+        if (GetCompletionTimesCurrent() < GetCompletionTimesMax())
+        {
+            SetCompletionTimesCurrent(GetCompletionTimesCurrent() + 1);
+        }
+        else
+        {
+            throw new Exception("You have already completed this goal.");
+        }   
+    }
+
+    public override int CalculatePoints()
+    {
+        return GetCompletionTimesCurrent() * GetPoints() + (IsComplete() ? GetCompletionBonus() : 0);
+    }
+
+    public override int GetRecordPoints()
+    {
+        int points = GetPoints();
+
+        if (IsComplete())
+        {
+            points += GetCompletionBonus();
+        }
+
+        return points;
     }
 }

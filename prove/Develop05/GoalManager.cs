@@ -156,6 +156,8 @@ public class GoalManager()
             }
             break;
         }
+
+        Console.WriteLine("Goal has been added.");
     }
 
     public void ListGoals()
@@ -184,6 +186,9 @@ public class GoalManager()
 
     public void LoadGoals(string filename)
     {
+        _goals = [];
+        _score = 0;
+
         string[] lines = System.IO.File.ReadAllLines(filename);
 
         foreach (string line in lines)
@@ -199,6 +204,7 @@ public class GoalManager()
                 {
                     SimpleGoal goal = SimpleGoal.CreateInstance(goalData);
                     _goals.Add(goal);
+                    _score += goal.CalculatePoints();
                 }
                 break;
 
@@ -206,6 +212,7 @@ public class GoalManager()
                 {
                     EternalGoal goal = EternalGoal.CreateInstance(goalData);
                     _goals.Add(goal);
+                    _score += goal.CalculatePoints();
                 }
                 break;
 
@@ -213,6 +220,7 @@ public class GoalManager()
                 {
                     ChecklistGoal goal = ChecklistGoal.CreateInstance(goalData);
                     _goals.Add(goal);
+                    _score += goal.CalculatePoints();
                 }
                 break;
             }
@@ -223,6 +231,32 @@ public class GoalManager()
 
     public void RecordEvent()
     {
+        Console.Write("Which goal did you accomplish? ");
+        
+        int goalNumber = int.Parse(Console.ReadLine());
+        int goalIndex = goalNumber - 1;
 
+        if (_goals.ElementAtOrDefault(goalIndex) == null)
+        {
+            Console.WriteLine("Wrong goal number.");
+            return;
+        }
+
+        var goal = _goals[goalIndex];
+
+        try
+        {
+            goal.RecordEvent();
+
+            int points = goal.GetRecordPoints();
+            
+            _score += points;
+
+            Console.WriteLine($"Congratulations! You have earned {points} points.");
+        }
+        catch (System.Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
     }
 }

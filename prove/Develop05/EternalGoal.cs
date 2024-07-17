@@ -1,7 +1,5 @@
 public class EternalGoal(string name, string description, int points) : Goal(name, description, points)
 {
-    private int _completionTimesCurrent = 0;
-
     public static EternalGoal CreateInstance(string[] data)
     {
         EternalGoal obj = new(data[0], data[1], Int32.Parse(data[2]));
@@ -10,14 +8,22 @@ public class EternalGoal(string name, string description, int points) : Goal(nam
         return obj;
     }
 
-    public void SetCompletionTimesCurrent(int count)
+    public override string GetDetailsString(int number)
     {
-        _completionTimesCurrent = count;
+        string goalCompleteMark = IsComplete() ? "x" : " ";
+            
+        return $"{number}. [{goalCompleteMark}] {GetName()} ({GetDescription()})"
+            + $" | Completed: {GetCompletionTimesCurrent()}";
     }
 
     public override string GetStringRepresentation()
     {
-        List<string> data = [_name, _description, _points.ToString(), _completionTimesCurrent.ToString()];
+        List<string> data = [
+            GetName(), 
+            GetDescription(), 
+            GetPoints().ToString(), 
+            GetCompletionTimesCurrent().ToString()
+        ];
 
         return typeof(EternalGoal).Name + ":" + String.Join(",", data);
     }
@@ -29,6 +35,16 @@ public class EternalGoal(string name, string description, int points) : Goal(nam
 
     public override void RecordEvent()
     {
-        throw new NotImplementedException();
+        SetCompletionTimesCurrent(GetCompletionTimesCurrent() + 1);
+    }
+
+    public override int CalculatePoints()
+    {
+        return GetCompletionTimesCurrent() * GetPoints();
+    }
+
+    public override int GetRecordPoints()
+    {
+        return GetPoints();
     }
 }
