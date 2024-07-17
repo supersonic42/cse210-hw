@@ -32,6 +32,11 @@ public abstract class Goal(string name, string description, int points)
         return _description;
     }
 
+    public int GetPoints()
+    {
+        return _points;
+    }
+
     public int GetCompletionTimesCurrent()
     {
         return _completionTimesCurrent;
@@ -40,10 +45,5 @@ public abstract class Goal(string name, string description, int points)
     public void SetCompletionTimesCurrent(int count)
     {
         _completionTimesCurrent = count;
-    }
-
-    public int GetPoints()
-    {
-        return _points;
     }
 }

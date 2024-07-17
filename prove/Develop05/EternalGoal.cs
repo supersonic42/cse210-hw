@@ -10,10 +10,7 @@ public class EternalGoal(string name, string description, int points) : Goal(nam
 
     public override string GetDetailsString(int number)
     {
-        string goalCompleteMark = IsComplete() ? "x" : " ";
-            
-        return $"{number}. [{goalCompleteMark}] {GetName()} ({GetDescription()})"
-            + $" | Completed: {GetCompletionTimesCurrent()}";
+        return $"{number}. [ ] {GetName()} ({GetDescription()}) | Completed: {GetCompletionTimesCurrent()}";
     }
 
     public override string GetStringRepresentation()
