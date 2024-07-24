@@ -1,9 +1,9 @@
 public class Address(string country, string state, string city, string street)
 {
-    string _country = country;
-    string _state = state;
-    string _city = city;
-    string _street = street;
+    private string _country = country;
+    private string _state = state;
+    private string _city = city;
+    private string _street = street;
     
     public bool IsUsa()
     {

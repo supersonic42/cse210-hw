@@ -1,9 +1,9 @@
 public class Product(int id, string name, float price, int quantity)
 {
     private int _id = id;
-    string _name = name;
-    float _price = price;
-    int _quantity = quantity;
+    private string _name = name;
+    private float _price = price;
+    private int _quantity = quantity;
 
     public float GetTotalPrice()
     {

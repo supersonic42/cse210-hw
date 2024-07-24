@@ -1,7 +1,7 @@
 public class Order()
 {
-    List<Product> _products = [];
-    Customer _customer;
+    private List<Product> _products = [];
+    private Customer _customer;
 
     public float GetTotalCost()
     {
